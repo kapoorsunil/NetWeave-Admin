@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000/api'
 const tokenStorageKey = 'netweave_admin_token'
+const ADMIN_ROOT_WALLET = '0xB0fAD5d0140529C94D43FDA39e918A23B9E5F555'
 
 async function request(path, options = {}, token = '') {
   const response = await fetch(`${API_BASE_URL}${path}`, {
@@ -218,6 +219,18 @@ function App() {
       setIsTopUping(false)
     }
   }
+const handleViewAllTree = async () => {
+  setIsTreeLoading(true)
+  try {
+    const data = await request(`/users/team?wallet=${encodeURIComponent(ADMIN_ROOT_WALLET)}`, {}, token)
+    setTeamView(data)
+    setStatus({ message: 'Complete tree loaded successfully.', tone: 'success' })
+  } catch (error) {
+    setStatus({ message: error.message || 'Failed to load complete tree.', tone: 'error' })
+  } finally {
+    setIsTreeLoading(false)
+  }
+}
 
   const handleViewTree = async () => {
     if (!searchResult?.walletAddress) {
@@ -338,6 +351,29 @@ function App() {
         </header>
 
         <section className="admin-card">
+          <div className="result-grid">
+            <article className="metric-card">
+              <span>Total Main Balance</span>
+              <strong>${formatMoney(admin.dashboardSummary?.totalMainBalance ?? 0)}</strong>
+            </article>
+            <article className="metric-card">
+              <span>Total Referral Balance</span>
+              <strong>${formatMoney(admin.dashboardSummary?.totalReferralBalance ?? 0)}</strong>
+            </article>
+            <article className="metric-card">
+              <span>Total Registration</span>
+              <strong>{admin.dashboardSummary?.totalRegistrations ?? 0}</strong>
+            </article>
+            <article className="metric-card">
+              <span>Paid Registration</span>
+              <strong>{admin.dashboardSummary?.paidRegistrations ?? 0}</strong>
+            </article>
+            <article className="metric-card">
+              <span>Unpaid Registration</span>
+              <strong>{admin.dashboardSummary?.unpaidRegistrations ?? 0}</strong>
+            </article>
+          </div>
+
           <div className="search-row">
             <input
               className="field-input"
@@ -348,6 +384,12 @@ function App() {
             />
             <button className="cta-btn" type="button" onClick={handleSearch} disabled={isSearching}>
               {isSearching ? 'Searching...' : 'Search'}
+            </button>
+          </div>
+
+          <div className="view-tree-row">
+            <button className="cta-btn cta-secondary" type="button" onClick={handleViewAllTree} disabled={isTreeLoading}>
+              {isTreeLoading ? 'Loading Tree...' : 'View Complete Tree'}
             </button>
           </div>
 
@@ -426,3 +468,7 @@ function App() {
 }
 
 export default App
+
+
+
+
