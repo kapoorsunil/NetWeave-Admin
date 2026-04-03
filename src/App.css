@@ -178,6 +178,203 @@ h1 {
   margin: 0;
 }
 
+.records-card {
+  gap: 1.4rem;
+}
+
+.records-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.4rem;
+}
+
+.record-summary-card {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: 1.25rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
+  padding: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.record-summary-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.record-summary-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  border-color: rgba(96, 231, 255, 0.3);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
+}
+
+.record-summary-card:hover::before {
+  opacity: 1;
+}
+
+.record-summary-card .eyebrow {
+  margin-bottom: 0.2rem;
+}
+
+.card-value-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.card-value-group h2 {
+  margin: 0;
+  font-family: "Orbitron", sans-serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+  color: var(--text);
+  line-height: 1.1;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.08);
+}
+
+.card-value-group span {
+  color: var(--text-soft);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.record-summary-card p {
+  margin: 0;
+  color: var(--cyan);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.record-summary-card .cta-btn {
+  margin-top: auto;
+  border-radius: 0.75rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text);
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.record-summary-card .cta-btn:hover {
+  background: rgba(96, 231, 255, 0.1);
+  border-color: rgba(96, 231, 255, 0.4);
+  color: var(--cyan);
+}
+
+.records-detail-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.records-section {
+  display: grid;
+  gap: 0.9rem;
+  padding-top: 0.4rem;
+}
+
+.records-section + .records-section {
+  border-top: 1px solid rgba(95, 207, 255, 0.14);
+  padding-top: 1.35rem;
+}
+
+.records-section-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.records-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.records-section-header h2 {
+  margin: 0.35rem 0 0;
+  font-family: "Orbitron", sans-serif;
+  font-size: clamp(1rem, 2vw, 1.35rem);
+}
+
+.records-count {
+  color: var(--text-soft);
+  font-weight: 700;
+}
+
+.records-toggle-btn {
+  border: 1px solid rgba(96, 231, 255, 0.26);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--cyan);
+  padding: 0.72rem 1rem;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.records-toggle-btn:hover {
+  background: rgba(96, 231, 255, 0.08);
+}
+
+.records-list {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.record-item,
+.empty-records {
+  border: 1px solid var(--line);
+  border-radius: 1.1rem;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.record-item {
+  padding: 1rem;
+}
+
+.record-item-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.8rem 1rem;
+}
+
+.record-item-grid div {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.record-item-grid span {
+  color: var(--text-soft);
+  font-size: 0.85rem;
+}
+
+.record-item-grid strong {
+  color: var(--text);
+  word-break: break-word;
+  line-height: 1.45;
+}
+
+.empty-records {
+  padding: 1rem;
+  color: var(--text-soft);
+  font-weight: 600;
+}
+
 .status-card {
   padding: 0.95rem 1rem;
   font-weight: 700;
@@ -458,9 +655,14 @@ h1 {
 
 @media (max-width: 768px) {
   .result-grid,
+  .records-summary-grid,
   .search-row,
   .topup-row {
     grid-template-columns: 1fr;
+  }
+
+  .records-section-header {
+    flex-direction: column;
   }
 
   .view-tree-row {
